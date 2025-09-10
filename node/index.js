@@ -11,10 +11,10 @@ app.use(express.json());
 
 // Konfiguracja bazy PostgreSQL
 const pool = new Pool({
-  user: "postgres",      // zmień na swojego użytkownika
+  user: "*****",      // zmień na swojego użytkownika
   host: "localhost",
   database: "egarderoba",
-  password: "test123",
+  password: "*****",
   port: 5432,
 });
 
