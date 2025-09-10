@@ -20,8 +20,8 @@ const pool = new Pool({
 
 // Sprawdzenie połączenia
 pool.connect()
-  .then(() => console.log("✅ Połączono z PostgreSQL"))
-  .catch(err => console.error("❌ Błąd połączenia:", err));
+  .then(() => console.log("Połączono z PostgreSQL"))
+  .catch(err => console.error("Błąd połączenia:", err));
 
 // Endpoint: lista ubrań
 app.get("/clothes", async (req, res) => {
