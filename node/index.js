@@ -1,3 +1,4 @@
+require("dotenv").config(); // Need to install dotenv !! IMPORTANT
 const express = require("express");
 const { Pool } = require("pg");
 const cors = require("cors");
@@ -9,19 +10,19 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-// Konfiguracja bazy PostgreSQL
+// Konfiguracja bazy PostgreSQL z env
 const pool = new Pool({
-  user: "*****",      // zmień na swojego użytkownika
-  host: "localhost",
-  database: "egarderoba",
-  password: "*****",
-  port: 5432,
+  user: process.env.PG_USER,
+  host: process.env.PG_HOST,
+  database: process.env.PG_DATABASE,
+  password: process.env.PG_PASSWORD,
+  port: process.env.PG_PORT,
 });
 
 // Sprawdzenie połączenia
 pool.connect()
-  .then(() => console.log("Połączono z PostgreSQL"))
-  .catch(err => console.error("Błąd połączenia:", err));
+  .then(() => console.log("✅ Połączono z PostgreSQL"))
+  .catch(err => console.error("❌ Błąd połączenia:", err));
 
 // Endpoint: lista ubrań
 app.get("/clothes", async (req, res) => {
