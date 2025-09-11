@@ -1,4 +1,4 @@
-require("dotenv").config(); // Need to install dotenv !! IMPORTANT
+require("dotenv").config({ path: '../pass.env' }); // Need to install dotenv !! IMPORTANT
 const express = require("express");
 const { Pool } = require("pg");
 const cors = require("cors");
