@@ -12,7 +12,7 @@ function App() {
 
   // Pobieranie ubrań z API
   useEffect(() => {
-    fetch("http://localhost:3000/clothes")
+    fetch("/clothes")
       .then(res => res.json())
       .then(data => setClothes(data))
       .catch(err => console.error("Błąd pobierania:", err));
