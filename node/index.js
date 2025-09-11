@@ -1,4 +1,6 @@
 require("dotenv").config({ path: "../.env" });
+console.log("DB_USER:", process.env.DB_USER);
+console.log("DB_PASSWORD:", process.env.DB_PASSWORD);
 console.log("Loaded env:", process.env);
 const express = require("express");
 const { Pool } = require("pg");
