@@ -1,4 +1,4 @@
-require("dotenv").config({ path: "../pass.env" });
+require("dotenv").config({ path: "../.env" });
 console.log("DB_USER:", process.env.DB_USER);
 console.log("DB_PASSWORD:", process.env.DB_PASSWORD);
 const express = require("express");
