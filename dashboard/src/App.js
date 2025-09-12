@@ -7,7 +7,7 @@ function App() {
     color: "",
     size: "",
     brand: "",
-    manufacturer: ""
+    manufaktura: ""
   });
 
   // Pobieranie ubrań z API
@@ -33,7 +33,7 @@ function App() {
       .then(res => res.json())
       .then(newItem => {
         setClothes([...clothes, newItem]);
-        setForm({ type: "", color: "", size: "", brand: "", manufacturer: "" });
+        setForm({ type: "", color: "", size: "", brand: "", manufaktura: "" });
       })
       .catch(err => console.error("Błąd dodawania:", err));
   };
@@ -48,7 +48,7 @@ function App() {
         <input name="color" placeholder="Color" value={form.color} onChange={handleChange} />
         <input name="size" placeholder="Size" value={form.size} onChange={handleChange} />
         <input name="brand" placeholder="Brand" value={form.brand} onChange={handleChange} />
-        <input name="manufacturer" placeholder="Manufacturer" value={form.manufacturer} onChange={handleChange} />
+        <input name="manufaktura" placeholder="Manufaktura" value={form.manufaktura} onChange={handleChange} />
         <button type="submit">Dodaj</button>
       </form>
 
@@ -61,7 +61,7 @@ function App() {
             <th>Color</th>
             <th>Size</th>
             <th>Brand</th>
-            <th>Manufacturer</th>
+            <th>Manufaktura</th>
           </tr>
         </thead>
         <tbody>
@@ -72,7 +72,7 @@ function App() {
               <td>{item.color}</td>
               <td>{item.size}</td>
               <td>{item.brand}</td>
-              <td>{item.manufacturer}</td>
+              <td>{item.manufaktura}</td>
             </tr>
           ))}
         </tbody>
