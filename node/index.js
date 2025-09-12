@@ -51,7 +51,7 @@ app.get("/clothes/:id", async (req, res) => {
 
 // POST /clothes → dodaje nowe ubranie
 app.post("/clothes", async (req, res) => {
-  const { type, color, size, brand, manufaktura } = req.body;
+  const { type, color, size, brand, manufaktura } = req.body;  // ✅ poprawka
   try {
     const result = await pool.query(
       "INSERT INTO clothes (type, color, size, brand, manufaktura) VALUES ($1, $2, $3, $4, $5) RETURNING *",
@@ -59,7 +59,7 @@ app.post("/clothes", async (req, res) => {
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
-    console.error("❌ Błąd SQL:", err);  // <<-- to dopisz
+    console.error("❌ Błąd SQL:", err);
     res.status(500).json({ error: "Błąd dodawania ubrania" });
   }
 });
