@@ -54,8 +54,8 @@ app.post("/clothes", async (req, res) => {
   const { type, color, size, brand } = req.body;
   try {
     const result = await pool.query(
-      "INSERT INTO clothes (type, color, size, brand) VALUES ($1, $2, $3, $4) RETURNING *",
-      [type, color, size, brand]
+      "INSERT INTO clothes (type, color, size, brand, manufaktura) VALUES ($1, $2, $3, $4) RETURNING *",
+      [type, color, size, brand, manufaktura]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
