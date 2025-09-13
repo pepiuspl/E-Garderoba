@@ -107,7 +107,7 @@ function App() {
 
             {/* Zdjęcie */}
             <img
-              src="https://via.placeholder.com/150"
+              src={item.image_url ? `http://192.168.0.50:3000${item.image_url}` : "https://via.placeholder.com/150"}
               alt={item.type}
               style={{ width: "100%", borderRadius: "8px", marginBottom: "10px" }}
             />
