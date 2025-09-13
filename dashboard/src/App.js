@@ -87,7 +87,22 @@ function App() {
       {/* Formularz dodawania */}
       <h2>Dodaj ubranie</h2>
       <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
-        <input name="category" placeholder="Type" value={form.category} onChange={handleChange} />
+      <select name="category" value={form.category} onChange={handleChange}>
+        <option value="">-- wybierz typ --</option>
+        <option value="kurtka">Kurtka</option>
+        <option value="trench">Trencze</option>
+        <option value="marynarka">Marynarka</option>
+        <option value="jeans">Jeansy</option>
+        <option value="spodnie">Spodnie</option>
+        <option value="spodnica">Spódnica</option>
+        <option value="koszulkaram">Koszulki na ramiączkach</option>
+        <option value="tshirt">Tshirt</option>
+        <option value="koszulkarekaw">Koszulka z długim rękawem</option>
+        <option value="sweter">Sweter</option>
+        <option value="sukienki">Sukienki</option>
+        <option value="spodenki">Spodenki</option>
+        <option value="bluza">Bluza</option>
+      </select>
         <input name="color" placeholder="Color" value={form.color} onChange={handleChange} />
         <input name="material" placeholder="Material" value={form.material} onChange={handleChange} />
         <input name="kroj" placeholder="Kroj" value={form.kroj} onChange={handleChange} />
