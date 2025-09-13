@@ -30,22 +30,7 @@ function App() {
   e.preventDefault();
 
   const formData = new FormData();
-  <select name="category" value={form.category} onChange={handleChange}>
-    <option value="">-- wybierz typ --</option>
-    <option value="kurtka">Kurtka</option>
-    <option value="trench">Trencze</option>
-    <option value="marynarka">Marynarka</option>
-    <option value="jeans">Jeansy</option>
-    <option value="spodnie">Spodnie</option>
-    <option value="spodnica">Spódnica</option>
-    <option value="koszulkaram">Koszulki na ramiączkach</option>
-    <option value="tshirt">Tshirt</option>
-    <option value="koszulkarekaw">Koszulka z długim rękawem</option>
-    <option value="sweter">Sweter</option>
-    <option value="sukienki">Sukienki</option>
-    <option value="spodenki">Spodenki</option>
-    <option value="bluza">Bluza</option>
-  </select>
+  formData.append("category", form.category);
   formData.append("color", form.color);
   formData.append("material", form.material);
   formData.append("kroj", form.kroj);
@@ -109,7 +94,16 @@ function App() {
         <input name="material" placeholder="Material" value={form.material} onChange={handleChange} />
         <input name="kroj" placeholder="Kroj" value={form.kroj} onChange={handleChange} />
         <input name="season" placeholder="Season" value={form.season} onChange={handleChange} />
-        <input name="favorite" placeholder="Favorite (true/false)" value={form.favorite} onChange={handleChange} />
+        <label>
+          <input
+            type="checkbox"
+            name="favorite"
+            checked={form.favorite}
+            onChange={(e) => setForm({ ...form, favorite: e.target.checked })}
+          />
+            Ulubione
+        </label>
+
         <input type="file" accept="image/*" capture="environment" onChange={(e) => setForm({ ...form, image: e.target.files[0] })}/>
         <button type="submit">Dodaj</button>
       </form>

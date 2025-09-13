@@ -75,8 +75,8 @@ app.put("/clothes/:id", async (req, res) => {
   const { category, color, material, kroj, season, favorite} = req.body;
   try {
     const result = await pool.query(
-      "UPDATE clothes SET type = $1, color = $2, material = $3, kroj = $4, season = $5, favorite = $6 WHERE id = $7 RETURNING *",
-      [type, color, material, kroj, season, favorite, id]
+      "UPDATE clothes SET category = $1, color = $2, material = $3, kroj = $4, season = $5, favorite = $6 WHERE id = $7 RETURNING *",
+      [category, color, material, kroj, season, favorite, id]
     );
     if (result.rows.length === 0) {
       return res.status(404).json({ error: "Nie znaleziono ubrania" });
