@@ -24,28 +24,31 @@ function App() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    fetch("http://192.168.0.50:3000/clothes", {
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData();
+  formData.append("type", form.type);
+  formData.append("color", form.color);
+  formData.append("size", form.size);
+  formData.append("brand", form.brand);
+  formData.append("manufaktura", form.manufaktura);
+  if (form.image) {
+    formData.append("image", form.image);
+  }
+
+  try {
+    const res = await fetch("http://192.168.0.50:3000/clothes", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form)
-    })
-      .then(res => res.json())
-      .then(newItem => {
-        setClothes([...clothes, newItem]);
-        setForm({ type: "", color: "", size: "", brand: "", manufaktura: "" });
-      })
-      .catch(err => console.error("Błąd dodawania:", err));
-  };
-
-  // Obsługa ulubionych
-  const toggleFavorite = (id) => {
-    setFavorites(prev =>
-      prev.includes(id) ? prev.filter(fav => fav !== id) : [...prev, id]
-    );
-  };
-
+      body: formData
+    });
+    const newItem = await res.json();
+    setClothes([...clothes, newItem]);
+    setForm({ type: "", color: "", size: "", brand: "", manufaktura: "", image: null });
+  } catch (err) {
+    console.error("Błąd dodawania:", err);
+  }
+};
   // Obsługa akcji na kartach
   const ubierz = (item) => {
     alert(`Dobieram look do: ${item.type} (${item.color})`);
@@ -67,6 +70,7 @@ function App() {
         <input name="size" placeholder="Size" value={form.size} onChange={handleChange} />
         <input name="brand" placeholder="Brand" value={form.brand} onChange={handleChange} />
         <input name="manufaktura" placeholder="Manufaktura" value={form.manufaktura} onChange={handleChange} />
+        <input type="file" accept="image/*" capture="environment" onChange={(e) => setForm({ ...form, image: e.target.files[0] })}/>
         <button type="submit">Dodaj</button>
       </form>
 

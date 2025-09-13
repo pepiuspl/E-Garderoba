@@ -20,7 +20,20 @@ const pool = new Pool({
   password: process.env.DB_PASSWORD,
   port: process.env.DB_PORT,
 });
+const multer = require("multer");
+const path = require("path");
 
+// folder na zdjęcia
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage });
 // 🔹 Endpointy CRUD tutaj 👇
 
 // GET /clothes → pobiera wszystkie ubrania
@@ -50,12 +63,14 @@ app.get("/clothes/:id", async (req, res) => {
 });
 
 // POST /clothes → dodaje nowe ubranie
-app.post("/clothes", async (req, res) => {
-  const { type, color, size, brand, manufaktura } = req.body;  // ✅ poprawka
+app.post("/clothes", upload.single("image"), async (req, res) => {
+  const { type, color, size, brand, manufaktura } = req.body;
+  const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+
   try {
     const result = await pool.query(
-      "INSERT INTO clothes (type, color, size, brand, manufaktura) VALUES ($1, $2, $3, $4, $5) RETURNING *",
-      [type, color, size, brand, manufaktura]
+      "INSERT INTO clothes (type, color, size, brand, manufaktura, image_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+      [type, color, size, brand, manufaktura, imageUrl]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
@@ -63,6 +78,9 @@ app.post("/clothes", async (req, res) => {
     res.status(500).json({ error: "Błąd dodawania ubrania" });
   }
 });
+
+// udostępnij folder ze zdjęciami
+app.use("/uploads", express.static("uploads"));
 
 // PUT /clothes/:id → edytuje ubranie
 app.put("/clothes/:id", async (req, res) => {
