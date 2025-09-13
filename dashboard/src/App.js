@@ -57,6 +57,12 @@ function App() {
   const pranie = (item) => {
     alert(`Dodano do prania: ${item.type} (${item.color})`);
   };
+  
+  const toggleFavorite = (id) => {
+  setFavorites(prev =>
+    prev.includes(id) ? prev.filter(fav => fav !== id) : [...prev, id]
+  );
+};
 
   return (
     <div style={{ padding: "20px", fontFamily: "Arial" }}>
