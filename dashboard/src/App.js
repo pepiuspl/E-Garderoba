@@ -117,7 +117,7 @@ function App() {
 
             {/* Przyciski */}
             <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
-              <button style={{ flex: 1 }} onClick={() => ubierz(item)}>Ubierz <br> Dobierz look</button>
+              <button style={{ flex: 1 }} onClick={() => ubierz(item)}>Ubierz || Dobierz look</button>
               <button style={{ flex: 1 }} onClick={() => pranie(item)}>Rzecz w praniu</button>
             </div>
           </div>
