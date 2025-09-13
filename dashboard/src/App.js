@@ -28,11 +28,27 @@ function App() {
   e.preventDefault();
 
   const formData = new FormData();
-  formData.append("type", form.type);
+  <select name="category" value={form.category} onChange={handleChange}>
+    <option value="">-- wybierz typ --</option>
+    <option value="kurtka">Kurtka</option>
+    <option value="trench">Trencze</option>
+    <option value="marynarka">Marynarka</option>
+    <option value="jeans">Jeansy</option>
+    <option value="spodnie">Spodnie</option>
+    <option value="spodnica">Spódnica</option>
+    <option value="koszulkaram">Koszulki na ramiączkach</option>
+    <option value="tshirt">Tshirt</option>
+    <option value="koszulkarekaw">Koszulka z długim rękawem</option>
+    <option value="sweter">Sweter</option>
+    <option value="sukienki">Sukienki</option>
+    <option value="spodenki">Spodenki</option>
+    <option value="bluza">Bluza</option>
+  </select>
   formData.append("color", form.color);
-  formData.append("size", form.size);
-  formData.append("brand", form.brand);
-  formData.append("manufaktura", form.manufaktura);
+  formData.append("material", form.material);
+  formData.append("kroj", form.kroj);
+  formData.append("season", form.season);
+  formData.append("favorite", form.favorite);
   if (form.image) {
     formData.append("image", form.image);
   }
@@ -44,20 +60,20 @@ function App() {
     });
     const newItem = await res.json();
     setClothes([...clothes, newItem]);
-    setForm({ type: "", color: "", size: "", brand: "", manufaktura: "", image: null });
+    setForm({ category: "", color: "", material: "", kroj: "", season: "", favorite:"", image: null });
   } catch (err) {
     console.error("Błąd dodawania:", err);
   }
 };
   // Obsługa akcji na kartach
   const ubierz = (item) => {
-    alert(`Dobieram look do: ${item.type} (${item.color})`);
+    alert(`Dobieram look do: ${item.category} (${item.color})`);
   };
 
   const pranie = (item) => {
-    alert(`Dodano do prania: ${item.type} (${item.color})`);
+    alert(`Dodano do prania: ${item.category} (${item.color})`);
   };
-  
+
   const toggleFavorite = (id) => {
   setFavorites(prev =>
     prev.includes(id) ? prev.filter(fav => fav !== id) : [...prev, id]
@@ -71,11 +87,12 @@ function App() {
       {/* Formularz dodawania */}
       <h2>Dodaj ubranie</h2>
       <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
-        <input name="type" placeholder="Type" value={form.type} onChange={handleChange} />
+        <input name="category" placeholder="Type" value={form.category} onChange={handleChange} />
         <input name="color" placeholder="Color" value={form.color} onChange={handleChange} />
-        <input name="size" placeholder="Size" value={form.size} onChange={handleChange} />
-        <input name="brand" placeholder="Brand" value={form.brand} onChange={handleChange} />
-        <input name="manufaktura" placeholder="Manufaktura" value={form.manufaktura} onChange={handleChange} />
+        <input name="material" placeholder="Material" value={form.material} onChange={handleChange} />
+        <input name="kroj" placeholder="Kroj" value={form.kroj} onChange={handleChange} />
+        <input name="season" placeholder="Season" value={form.season} onChange={handleChange} />
+        <input name="favorite" placeholder="Favorite (true/false)" value={form.favorite} onChange={handleChange} />
         <input type="file" accept="image/*" capture="environment" onChange={(e) => setForm({ ...form, image: e.target.files[0] })}/>
         <button type="submit">Dodaj</button>
       </form>
@@ -114,17 +131,18 @@ function App() {
             {/* Zdjęcie */}
             <img
               src={item.image_url ? `http://192.168.0.50:3000${item.image_url}` : "https://via.placeholder.com/150"}
-              alt={item.type}
+              alt={item.category}
               style={{ width: "100%", borderRadius: "8px", marginBottom: "10px" }}
             />
 
             {/* Opis */}
-            <h3>{item.type}</h3>
+            <h3>{item.category}</h3>
             <p>Kolor: {item.color}</p>
-            <p>Rozmiar: {item.size}</p>
-            <p>Marka: {item.brand}</p>
-            <p>Manufaktura: {item.manufaktura}</p>
-
+            <p>Materiał: {item.material}</p>
+            <p>Krój: {item.kroj}</p>
+            <p>Sezon: {item.season}</p>
+            <p>Ulubione: {item.favorite ? "Tak" : "Nie"}</p>
+            
             {/* Przyciski */}
             <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
               <button style={{ flex: 1 }} onClick={() => ubierz(item)}>Ubierz || Dobierz look</button>

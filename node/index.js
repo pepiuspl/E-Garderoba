@@ -48,29 +48,27 @@ app.get("/clothes", async (req, res) => {
 });
 
 // GET /clothes/:id → pobiera jedno ubranie
-app.get("/clothes/:id", async (req, res) => {
+app.get("/clothes", async (req, res) => {
   try {
-    const { id } = req.params;
-    const result = await pool.query("SELECT * FROM clothes WHERE id = $1", [id]);
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: "Nie znaleziono ubrania" });
-    }
-    res.json(result.rows[0]);
+    const result = await pool.query("SELECT * FROM clothes ORDER BY created_at DESC");
+    res.json(result.rows);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Błąd pobierania ubrania" });
+    console.error("❌ Błąd pobierania:", err);
+    res.status(500).json({ error: "Błąd pobierania ubrań" });
   }
 });
 
 // POST /clothes → dodaje nowe ubranie
 app.post("/clothes", upload.single("image"), async (req, res) => {
-  const { type, color, size, brand, manufaktura } = req.body;
+  const { category, color, material, kroj, season, favorite } = req.body;
   const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
 
   try {
     const result = await pool.query(
-      "INSERT INTO clothes (type, color, size, brand, manufaktura, image_url) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
-      [type, color, size, brand, manufaktura, imageUrl]
+      `INSERT INTO clothes 
+      (category, color, material, kroj, season, favorite, image_url) 
+      VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+      [category, color, material, kroj, season, favorite === "true", imageUrl]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
