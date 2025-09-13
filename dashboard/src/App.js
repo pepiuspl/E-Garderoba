@@ -3,12 +3,14 @@ import React, { useState, useEffect } from "react";
 function App() {
   const [clothes, setClothes] = useState([]);
   const [form, setForm] = useState({
-    type: "",
-    color: "",
-    size: "",
-    brand: "",
-    manufaktura: ""
-  });
+  category: "",
+  color: "",
+  material: "",
+  kroj: "",
+  season: "",
+  favorite: false,
+  image: null
+});
   const [favorites, setFavorites] = useState([]);
 
   // Pobieranie ubrań z API

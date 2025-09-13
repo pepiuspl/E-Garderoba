@@ -47,17 +47,6 @@ app.get("/clothes", async (req, res) => {
   }
 });
 
-// GET /clothes/:id → pobiera jedno ubranie
-app.get("/clothes", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT * FROM clothes ORDER BY created_at DESC");
-    res.json(result.rows);
-  } catch (err) {
-    console.error("❌ Błąd pobierania:", err);
-    res.status(500).json({ error: "Błąd pobierania ubrań" });
-  }
-});
-
 // POST /clothes → dodaje nowe ubranie
 app.post("/clothes", upload.single("image"), async (req, res) => {
   const { category, color, material, kroj, season, favorite } = req.body;
@@ -83,7 +72,7 @@ app.use("/uploads", express.static("uploads"));
 // PUT /clothes/:id → edytuje ubranie
 app.put("/clothes/:id", async (req, res) => {
   const { id } = req.params;
-  const { type, color, material, kroj, season, favorite} = req.body;
+  const { category, color, material, kroj, season, favorite} = req.body;
   try {
     const result = await pool.query(
       "UPDATE clothes SET type = $1, color = $2, material = $3, kroj = $4, season = $5, favorite = $6 WHERE id = $7 RETURNING *",
