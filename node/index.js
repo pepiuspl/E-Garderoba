@@ -83,11 +83,11 @@ app.use("/uploads", express.static("uploads"));
 // PUT /clothes/:id → edytuje ubranie
 app.put("/clothes/:id", async (req, res) => {
   const { id } = req.params;
-  const { type, color, size, brand } = req.body;
+  const { type, color, material, kroj, season, favorite} = req.body;
   try {
     const result = await pool.query(
-      "UPDATE clothes SET type = $1, color = $2, size = $3, brand = $4 WHERE id = $5 RETURNING *",
-      [type, color, size, brand, id]
+      "UPDATE clothes SET type = $1, color = $2, material = $3, kroj = $4, season = $5, favorite = $6 WHERE id = $7 RETURNING *",
+      [type, color, material, kroj, season, favorite, id]
     );
     if (result.rows.length === 0) {
       return res.status(404).json({ error: "Nie znaleziono ubrania" });
